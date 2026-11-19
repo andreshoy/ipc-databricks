@@ -1,0 +1,33 @@
+[project]
+name = "ipc-databricks"
+version = "0.1.0"
+description = "IPC Colombia (DANE, base 2018) en Databricks Free Edition"
+requires-python = ">=3.12"
+dependencies = [
+    "databricks-sdk>=0.169.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.1.1",
+    "requests>=2.34.2",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0",
+    "pytest>=9.2.0",
+    "ruff>=0.17.6",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Notebooks de Databricks: spark, dbutils y display existen en tiempo de ejecución
+"notebooks/*.py" = ["F821", "E402", "I001", "E501"]

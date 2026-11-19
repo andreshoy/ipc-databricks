@@ -1,0 +1,23 @@
+# Databricks Asset Bundle (esqueleto).
+# Un "bundle" describe en código los recursos del proyecto (jobs, notebooks, dashboards)
+# para desplegarlos con `databricks bundle deploy`. Lo completaremos en la etapa 2.
+# Docs: https://docs.databricks.com/aws/en/dev-tools/bundles/
+
+bundle:
+  name: ipc-databricks
+
+variables:
+  catalogo:
+    description: Catálogo de Unity Catalog del proyecto
+    default: ipc
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      # Reemplaza con la URL de tu workspace (ver docs/04)
+      host: https://REEMPLAZAR.cloud.databricks.com

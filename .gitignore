@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Databricks
+.databricks/
+
+# Datos locales y secretos (nunca subir a GitHub)
+data/
+*.xlsx
+*.csv
+.env
+.databrickscfg
+
+# Sistema / editor
+.DS_Store
+.vscode/
