@@ -7,81 +7,111 @@ pantalla y se exportan con un botón, pero no hay una API ni enlaces directos a 
 el cómputo de Databricks Free Edition solo puede salir a internet hacia algunos dominios de
 confianza y no tiene navegador. Por eso:
 
-- **Tú**: exportas el archivo y lo subes al volumen.
+- **Tú**: exportas los archivos y los subes al volumen.
 - **Databricks**: detecta el archivo nuevo y hace todo lo demás (etapa 2).
 
 Guía oficial del DANE: <https://appindices.dane.gov.co/resources/pdf/guia_de_usuario.pdf>
 
-## El query mensual
+## Qué datos bajamos y por qué
 
-![Filtros del query mensual](img/pantallazo_query.jpeg)
+El DANE difunde oficialmente dos "dominios" (ver [docs/08](08_metodologia_ponderadores.md)):
+
+| Dominio oficial | Desagregación | Exportación |
+|---|---|---|
+| **Geográfico** | Nacional + ciudades × todos los niveles de canasta, para el Total de ingresos | **A · Ciudades** |
+| **Nivel de ingreso** | Solo nacional × todos los niveles de canasta × Pobres, Vulnerables, Clase media, Altos | **B · Ingresos** |
+
+Ciudad × nivel de ingreso **no** es un dominio oficial (la metodología lo descarta por tamaño de
+muestra), así que no lo descargamos para el histórico.
+
+¿Por qué los índices de subclase por ingreso? Si se usan los índices de subclase del Total con
+los pesos de cada nivel de ingreso, la brecha sale mal (oct-2026: Pobres–Altos 0,11 pp en vez de
+0,18 pp). Además, con las subclases por ingreso se puede explicar qué rubros abren o cierran la
+brecha.
+
+Siempre se exporta **solo `Número Índice`** y **todos los niveles de canasta** (Total, División,
+Grupo, Clase, Subclase). Las variaciones se calculan del índice y las contribuciones con los
+ponderadores.
+
+## Histórico 2019 → 2026 (una sola vez, 10 archivos)
+
+### A · Ciudades: 1 archivo por año (8 archivos)
+
+| Filtro | Selección |
+|---|---|
+| Año | **Un año** (2019, 2020, … 2026) |
+| Mes | Seleccionar todo |
+| Cobertura geográfica | Todas |
+| Ciudad | Todas |
+| Nivel de ingresos | **Total Nivel de Ingresos** |
+| Nivel de canasta | Total, División, Grupo, Clase, Subclase |
+| División / Grupo / Clase / Subclase | Todas |
+| Valor a graficar | Solo **Número Índice** (desmarca "Seleccionar todo") |
+
+~94.000 filas por archivo (327 rubros × 24 geografías × 12 meses). Nombre:
+`ipc_ciudades_2019.xlsx` … `ipc_ciudades_2026.xlsx`.
+
+### B · Ingresos nacional: 2 archivos de 4 años
+
+| Filtro | Selección |
+|---|---|
+| Año | **2019, 2020, 2021, 2022** (segundo archivo: 2023–2026) |
+| Mes | Seleccionar todo |
+| Cobertura geográfica | **Total Nacional** |
+| Nivel de ingresos | Pobres, Vulnerables, Clase Media, Ingresos Altos |
+| Nivel de canasta | Total, División, Grupo, Clase, Subclase |
+| División / Grupo / Clase / Subclase | Todas |
+| Valor a graficar | Solo **Número Índice** |
+
+~63.000 filas por archivo (327 rubros × 4 ingresos × 48 meses). Nombre:
+`ipc_ingresos_2019_2022.xlsx` y `ipc_ingresos_2023_2026.xlsx`.
+
+### Sobre 2018
+La base es **diciembre de 2018 = 100** para todas las series, así que el histórico consolidado
+arranca con dic-2018 = 100 (lo genera el proceso) y datos reales desde enero de 2019. Si el filtro
+de Año ofrece 2018, exporta también ese año con los dos esquemas y lo revisamos.
+
+## Actualización mensual (1 archivo)
 
 | Filtro | Selección |
 |---|---|
 | Año / Mes | El mes nuevo (p. ej. 2026 / Oct) |
-| Cobertura geográfica | Todas |
-| Ciudad | Todas |
-| Nivel de ingresos | **Uno a la vez** (ver límite abajo) |
-| Nivel de canasta | Subclase |
+| Cobertura geográfica / Ciudad | Todas |
+| Nivel de ingresos | Seleccionar todo |
+| Nivel de canasta | Todos |
 | División / Grupo / Clase / Subclase | Todas |
-| Valor a graficar | Ver recomendación abajo |
+| Valor a graficar | Solo **Número Índice** |
 
-Luego, sobre la tabla: menú **⋯** → **Exportar datos** → **.xlsx**.
+~39.000 filas. Nombre: `ipc_2026_10.xlsx`. Trae de más la combinación ciudad × ingreso; el
+proceso la marca como "no oficial" y conserva los dos dominios oficiales.
 
-## Lo que trae el archivo (revisado con un ejemplo real)
+## Cómo exportar
 
-- Hoja `Export`. Dos filas de encabezado: nombres de medidas y nombres de dimensiones.
-- Columnas: Año, Mes, Nivel de ingresos, Nivel de canasta, División, Grupo, Clase, Subclase
-  (como `01110100 - Arroz`: código + nombre), Cobertura Geografica (ciudad) y 15 medidas:
-  Número Índice y Variación / Contribución / Participación (mensual, año corrido, anual,
-  trimestral, semestral).
-- Los números vienen como texto con coma decimal (`155,06`). Hay celdas vacías (no publicadas).
-- **14 geografías**: Nacional + 13 ciudades (Barranquilla, Bogotá, Bucaramanga, Cali, Cartagena,
-  Cúcuta, Manizales, Medellín, Montería, Neiva, Pasto, Pereira, Villavicencio). San Andrés y
-  Quibdó vienen excluidas por el reporte.
-- ~188 subclases por ciudad → **~2.630 filas por mes** por cada nivel de ingresos.
-- Al final: "Filtros aplicados: ..." (útil como auditoría).
+Sobre la tabla de resultados: menú **⋯** (arriba a la derecha) → **Exportar datos** → **.xlsx**.
 
-El lector [src/ipc/lector.py](../src/ipc/lector.py) ya entiende este formato.
+![Filtros del query](img/pantallazo_query.jpeg)
 
-## ⚠️ Límites de exportación (probados)
+**Verifica cada archivo** abriéndolo en Excel. Las primeras filas deben decir:
+- ✅ `Medida es Número Índice` en "Filtros aplicados".
+- ❌ No debe aparecer `Exported data limited to 150000 rows` (o `exceeded the allowed volume`).
+
+El lector [src/ipc/lector.py](../src/ipc/lector.py) rechaza los archivos truncados.
+
+## Formato del archivo (referencia)
 
 Power BI exporta en dos formatos y el lector entiende ambos:
 
-| Formato | Cómo se ve | Límite | Aviso al final/inicio |
-|---|---|---|---|
-| Ancho (una columna por medida) | `data.xlsx` de ejemplo | ~9.400 filas | `Exported data exceeded the allowed volume` |
-| **Largo** (una fila por medida) | columnas `Medida` y `Medida_Dinamica` | **150.000 filas** | `Exported data limited to 150000 rows` |
+| Formato | Cómo se ve | Límite |
+|---|---|---|
+| Largo (una fila por medida) | notas arriba; columnas `Medida` y `Medida_Dinamica` | 150.000 filas |
+| Ancho (una columna por medida) | dos filas de encabezado; notas al final | ~9.400 filas |
 
-El lector **rechaza** archivos con cualquiera de esos avisos, así que no se cuelan datos
-incompletos.
-
-En formato largo, cada mes y nivel de ingresos ocupa **4.512 filas por medida** (188 subclases ×
-24 geografías; las 10 ciudades pequeñas y "Otras áreas urbanas" salen vacías a nivel de subclase,
-pero igual cuentan para el límite). Con las 16 medidas son 72.000 filas por mes, así que un año
-no cabe.
-
-**Recomendación: exportar solo `Número Índice`.** Las variaciones (mensual, anual, año corrido…)
-se calculan a partir del índice, y las contribuciones se calculan con los ponderadores. Así:
-
-| Exportación | Filtros | Filas aprox. | Archivos |
-|---|---|---|---|
-| Histórico | 1 año · 1 nivel de ingresos · niveles de canasta Total+División+Grupo+Clase+Subclase · Valor = Número Índice | ~94.000 | 1 por año por nivel de ingresos (8 años × 5 = 40) |
-| Mensual | 1 mes · **todos** los niveles de ingresos · todos los niveles de canasta · Número Índice | ~39.000 | 1 por mes |
-
-Prioridad para el histórico: primero **Total Nivel de Ingresos** (2019 → hoy); después los demás
-niveles de ingresos, que son los que permiten analizar las brechas.
-
-## Nombres de archivo (convención)
-
-`ipc_<nivel>_<año>_<mesinicial>-<mesfinal>.xlsx`, con nivel en `total`, `altos`, `media`,
-`vulnerables`, `pobres`:
-
-- Histórico: `historico/ipc_total_2019_01-03.xlsx`
-- Mensual: `mensual/ipc_total_2026_10.xlsx`, `mensual/ipc_pobres_2026_10.xlsx`
-
-El nombre es solo para que tú te orientes: el proceso lee año, mes e ingreso del contenido del
-archivo y elimina duplicados si un mes llega dos veces.
+- Dimensiones: Año, Mes, Nivel de ingresos, Nivel de canasta, División, Grupo, Clase, Subclase
+  (como `01110100 - Arroz`), Cobertura Geografica.
+- Números como texto con coma decimal (`155,06`). Hay celdas vacías: 10 ciudades y "Otras áreas
+  urbanas" no tienen subclases publicadas, pero igual ocupan filas.
+- 24 geografías: Nacional, 22 ciudades y Otras áreas urbanas (San Andrés y Quibdó van dentro de
+  esta última).
 
 ## Dónde guardar los archivos
 
@@ -95,9 +125,8 @@ archivo y elimina duplicados si un mes llega dos veces.
 
 ## Ponderadores (archivos de referencia)
 
-En [referencia/](../referencia/) están los ponderadores oficiales del IPC base 2018 (página
-[IPC ponderadores](https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-de-precios-al-consumidor-ipc/ipc-actualizacion-metodologica-2019/ipc-ponderadores)
-del DANE), con los códigos de la jerarquía:
+En [referencia/](../referencia/) están los ponderadores oficiales del IPC base 2018 con los
+códigos de la jerarquía:
 
 - `ponderadores_subclase.csv`: 188 subclases × Pobres, Vulnerables, Clase Media, Altos, Total
 - `ponderadores_division.csv`: 12 divisiones
@@ -105,10 +134,17 @@ del DANE), con los códigos de la jerarquía:
 
 Súbelos a una carpeta `referencia/` dentro del volumen `raw` (créala con **Create directory**).
 
-## Explorar el primer archivo
+## Cómo se consolidará (etapa 2)
 
-Abre [notebooks/01_explorar_archivo.py](../notebooks/01_explorar_archivo.py) en Databricks y dale
-**Run all** para confirmar que Databricks lee el archivo.
+1. **Bronze**: cada archivo tal cual, con el nombre del archivo y la fecha de carga.
+2. **Silver**: unión de todos los archivos en una tabla con clave
+   (fecha, nivel de ingreso, ciudad, nivel de canasta, código). Si una clave llega dos veces, gana
+   el archivo cargado más reciente. Se agrega dic-2018 = 100 y se marca el dominio (oficial
+   geográfico, oficial ingresos o consulta).
+3. **Validaciones**: ningún mes faltante desde 2019, ningún archivo truncado y total nacional igual
+   al anexo del DANE.
+4. **Gold**: variaciones (mensual, año corrido, anual), contribuciones con los ponderadores,
+   rankings y brechas.
 
 ## ✅ Checkpoint
-Hay archivos en `/Volumes/ipc/bronze/raw/` y el notebook 01 muestra su resumen.
+Los 10 archivos históricos están en `/Volumes/ipc/bronze/raw/historico/` sin aviso de truncado.
