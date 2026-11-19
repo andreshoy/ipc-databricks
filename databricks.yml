@@ -18,6 +18,5 @@ targets:
   dev:
     mode: development
     default: true
-    workspace:
-      # Reemplaza con la URL de tu workspace (ver docs/04)
-      host: https://REEMPLAZAR.cloud.databricks.com
+    # Sin "host" aquí: el CLI usa el perfil DEFAULT de ~/.databrickscfg (creado con
+    # `databricks auth login`, ver docs/04). Así la URL de tu workspace no queda en el repo público.

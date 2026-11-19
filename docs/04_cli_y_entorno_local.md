@@ -20,6 +20,7 @@ En VS Code: `Cmd+Shift+P` → *Python: Select Interpreter* → elige `.venv`.
 
 ```bash
 brew tap databricks/tap
+brew trust databricks/tap   # Homebrew reciente pide confiar explícitamente en taps de terceros
 brew install databricks
 databricks --version    # debe mostrar v0.2xx o superior
 ```
@@ -44,8 +45,8 @@ databricks catalogs list        # lista catálogos (verás 'workspace', 'system'
 
 ## D. Completar el bundle
 
-Abre [databricks.yml](../databricks.yml) y reemplaza `https://REEMPLAZAR.cloud.databricks.com` por
-la URL de tu workspace. Luego:
+[databricks.yml](../databricks.yml) no lleva la URL del workspace (el repo es público): usa el
+perfil `DEFAULT` que acabas de crear. Compruébalo con:
 
 ```bash
 databricks bundle validate
