@@ -2,12 +2,10 @@
 # MAGIC %md
 # MAGIC # 01 · Explorar un archivo exportado
 # MAGIC
-# MAGIC Lee uno de los archivos que subiste al volumen y muestra su estructura.
-# MAGIC Con esto diseñaremos las tablas `silver` y `gold` en la etapa 2.
+# MAGIC Lee **un** archivo del volumen con el lector del proyecto (`src/ipc/lector.py`) y muestra su
+# MAGIC estructura. Para revisar todos los archivos usa el notebook **02_verificar_volumen**.
 # MAGIC
-# MAGIC 1. Sube un archivo exportado de appindices a `/Volumes/ipc/bronze/raw/mensual/` (ver `docs/06`).
-# MAGIC 2. Corre todas las celdas (**Run all**).
-# MAGIC 3. Copia el resultado de la celda "Resumen" y compártelo.
+# MAGIC Widgets: `carpeta` (historico / mensual) y `archivo` (vacío = el primero de la carpeta).
 
 # COMMAND ----------
 
@@ -15,33 +13,29 @@
 
 # COMMAND ----------
 
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("../src"))  # código del proyecto en el Git folder
+
+from ipc.lector import leer_exportacion
+
 dbutils.widgets.text("catalogo", "ipc", "Catálogo")
 dbutils.widgets.text("carpeta", "mensual", "Subcarpeta del volumen")
-catalogo = dbutils.widgets.get("catalogo")
-carpeta = dbutils.widgets.get("carpeta")
+dbutils.widgets.text("archivo", "", "Archivo (vacío = el primero)")
 
-ruta = f"/Volumes/{catalogo}/bronze/raw/{carpeta}"
-archivos = [f for f in dbutils.fs.ls(ruta) if f.name.lower().endswith((".xlsx", ".csv"))]
-display(archivos)
-assert archivos, f"No hay archivos .xlsx/.csv en {ruta}. Sube uno primero (docs/06)."
+ruta = f"/Volumes/{dbutils.widgets.get('catalogo')}/bronze/raw/{dbutils.widgets.get('carpeta')}"
+archivos = sorted(f for f in os.listdir(ruta) if f.lower().endswith(".xlsx"))
+print("Archivos en la carpeta:", archivos)
+assert archivos, f"No hay archivos .xlsx en {ruta}. Súbelos primero (docs/06)."
+
+archivo = dbutils.widgets.get("archivo") or archivos[0]
+print(f"Leyendo: {ruta}/{archivo}")
 
 # COMMAND ----------
 
-import pandas as pd
-
-archivo = archivos[0].path.replace("dbfs:", "")
-print(f"Leyendo: {archivo}")
-
-if archivo.lower().endswith(".csv"):
-    df = pd.read_csv(archivo, sep=None, engine="python", encoding="utf-8-sig")
-else:
-    # La exportación de Power BI trae 2 filas de encabezado (medidas y dimensiones) y un pie
-    # con "Filtros aplicados" (y un aviso si se truncó). Usamos la segunda fila como encabezado.
-    crudo = pd.read_excel(archivo, header=None, dtype=str)
-    print("\n".join(crudo.iloc[-3:, 0].dropna()))  # pie del archivo
-    df = pd.read_excel(archivo, header=1, dtype=str)
-    df = df[df["Año"].str.fullmatch(r"\d{4}", na=False)]
-
+df = leer_exportacion(f"{ruta}/{archivo}", permitir_truncado=True)
+print("¿Truncado?:", df.attrs["truncado"])
 display(df.head(20))
 
 # COMMAND ----------
@@ -51,10 +45,11 @@ display(df.head(20))
 
 # COMMAND ----------
 
-print(f"Filas: {len(df):,} | Columnas: {len(df.columns)}")
-print("\nColumnas y tipos:")
-print(df.dtypes.to_string())
-print("\nValores distintos por columna (máx. 10 de ejemplo):")
-for col in df.columns:
-    valores = df[col].dropna().unique()
-    print(f"- {col}: {len(valores)} distintos -> {list(valores[:10])}")
+print(f"Registros: {len(df):,} | Columnas: {len(df.columns)}")
+print(f"Meses: {df.fecha.min():%Y-%m} a {df.fecha.max():%Y-%m}")
+for col in ["nivel_ingresos", "nivel_canasta", "ciudad"]:
+    valores = sorted(df[col].dropna().unique())
+    print(f"- {col}: {len(valores)} -> {valores}")
+display(
+    df.pivot_table(index="ciudad", columns="nivel_canasta", values="numero_indice", aggfunc="count")
+)
