@@ -12,6 +12,7 @@ Sigue los pasos en orden; cada uno termina con un **✅ Checkpoint** para saber 
 | [05 · Catálogo y volumen](05_crear_catalogo_y_volume.md) | Correr tu primer notebook | 10 min |
 | [06 · Exportar desde appindices](06_exportar_desde_appindices.md) | Bajar el IPC y subirlo a Databricks | 20 min |
 | [07 · Hoja de ruta](07_hoja_de_ruta.md) | Lo que construiremos después | lectura |
+| [08 · Metodología y ponderadores](08_metodologia_ponderadores.md) | Cómo se agregan subclases, ciudades e ingresos | lectura |
 
 ## Cómo funciona el proyecto (resumen)
 
