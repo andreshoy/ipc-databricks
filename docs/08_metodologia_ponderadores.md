@@ -4,20 +4,44 @@ Notas de trabajo, comprobadas con los datos de octubre de 2026.
 
 ## La pirámide de agregación del DANE
 
+Fuente: documento metodológico del IPC (DSO-IPC-MET-001 v7, sección "Método de cálculo en el
+IPC", págs. 34-36). El grano del IPC es el **índice de subclase por ciudad (c) y nivel de
+ingreso (g)**: I(c,g,i). El DANE calcula más de 20.000 cada mes.
+
 ```mermaid
 flowchart BT
-    A["Precios de artículos<br/>en cada ciudad"] --> B["Índice de subclase<br/>por ciudad  I(c,i)"]
-    B -->|"pesos ciudad × subclase × ingreso<br/>W(c,g,i) — NO publicados"| C["Índice de subclase nacional<br/>por nivel de ingreso  I(g,i)"]
-    C -->|"ponderadores subclase × ingreso<br/>w(g,i) — publicados"| D["IPC nacional<br/>por nivel de ingreso  IPC(g)"]
-    B -->|"pesos subclase de la ciudad<br/>w(c,i) — NO publicados"| E["IPC de cada ciudad"]
+    A["Relativos de precio por variedad<br/>(precio actual / anterior, misma fuente)"] -->|"media geométrica NO ponderada<br/>por artículo, ciudad y nivel de ingreso"| B["Variación por artículo<br/>(c, g, artículo)"]
+    B -->|"media aritmética con ponderadores FLEXIBLES<br/>(se ajustan cada enero) — NO publicados"| C["Índice de subclase<br/>I(c,g,i) — el grano"]
+    C -->|"'multi-ponderador': peso de la subclase en<br/>cada ingreso × peso del ingreso — NO publicado"| D["Subclase total ciudad  I(c,i)"]
+    C -->|"peso de la subclase en cada ciudad<br/>× peso de la ciudad — NO publicado"| E["Subclase nacional por ingreso  I(g,i)"]
+    D -->|"peso subclase en la ciudad × peso ciudad"| F["Subclase nacional  I(i)"]
+    E -->|"w(g,i) — PUBLICADO"| G["IPC nacional por ingreso"]
+    F -->|"w(i) — PUBLICADO"| H["IPC nacional total"]
 ```
 
-La fórmula en cada nivel es un promedio ponderado (tipo Laspeyres) de índices con base
-dic-2018 = 100:
+En cada nivel desde la subclase hacia arriba se usa una media aritmética ponderada de índices
+(Laspeyres encadenado desde la subclase), con base dic-2018 = 100:
 
 ```
-Índice agregado(t) = Σ peso_i × Índice_i(t) / Σ peso_i
+Índice agregado(t) = Σ peso_k × Índice_k(t) / Σ peso_k
 ```
+
+El peso de la celda (ciudad c, ingreso g, subclase i) dentro del total nacional es el gasto de esos
+hogares en esa subclase sobre el gasto total. El DANE solo publica sus sumas marginales:
+
+| Ponderador | ¿Publicado? | Dónde |
+|---|---|---|
+| Subclase × nivel de ingreso (nacional) w(g,i) | ✅ | Anexo 2 del documento metodológico; [referencia/ponderadores_subclase.csv](../referencia/ponderadores_subclase.csv) |
+| Peso de cada ciudad en el total | ✅ | Tabla 6; [referencia/ponderadores_ciudad.csv](../referencia/ponderadores_ciudad.csv) |
+| Peso de cada nivel de ingreso en el total | ✅ | Tabla 7 (Pobres 2,79 %; Clase media 57,50 %; el resto en la tabla) |
+| Subclase × ciudad, y subclase × ciudad × ingreso | ❌ | — |
+| Pesos de los artículos dentro de la subclase (flexibles) | ❌ | — |
+
+**Nota oficial sobre ingresos y ciudades:** el documento dice que el criterio de ingresos "solo
+permite generar resultados según nivel de ingresos para el IPC total" (nacional), porque la
+muestra de cada grupo de ingreso cambia mucho entre ciudades. Appindices sí muestra ciudad ×
+nivel de ingreso, pero en el proyecto conviene presentarlo como dato de consulta, con la
+advertencia de que el DANE no lo considera un dominio oficial de difusión.
 
 ## 1. De subclases a total nacional ✅ (reproducido)
 
@@ -49,9 +73,11 @@ de subclase de ese nivel.
 
 **¿Por qué pasa?** Hay dos fuentes de diferencia.
 
-**a) Dentro de cada ciudad, por los artículos.** Una subclase agrupa artículos (Frutas frescas
-incluye muchas frutas; Pastas incluye "para sopa" y "para seco"), y cada nivel de ingreso los
-pondera distinto. Comparación de Pobres contra Total en las 13 ciudades (oct-2026,
+**a) Dentro de cada ciudad, por los artículos y las fuentes.** Según la metodología, la
+variación de cada artículo se calcula por separado para cada nivel de ingreso, con las fuentes
+(establecimientos) asignadas a ese grupo ("grupo-fuente"). Además, una subclase agrupa artículos
+(Frutas frescas incluye muchas frutas; Pastas incluye "para sopa" y "para seco"), y cada nivel de
+ingreso los pondera distinto. Comparación de Pobres contra Total en las 13 ciudades (oct-2026,
 `pobres_2026.xlsx` frente a `data.xlsx`):
 
 | Artículos en la subclase | Pares ciudad × subclase con índice idéntico |
