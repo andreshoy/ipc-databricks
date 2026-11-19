@@ -40,9 +40,22 @@ ingreso):
 
 (Falta comparar estos valores por nivel de ingreso con una cifra publicada.)
 
-**Importante:** el índice de una misma subclase es distinto en cada nivel de ingreso (arroz
-oct-2026: Pobres 155,20 y Total 155,06). Por eso, para calcular un nivel de ingreso no se puede
-cambiar solo el ponderador: hay que usar también los índices de subclase de ese nivel.
+**Importante:** el índice nacional de una misma subclase es distinto en cada nivel de ingreso
+(arroz oct-2026: Pobres 155,20, Vulnerables 154,33, Clase media 155,44, Altos 155,19, Total
+155,06). Solo 4 de las 188 subclases tienen el mismo índice en los 5 niveles. Por eso, para
+calcular un nivel de ingreso no basta con cambiar el ponderador: hay que usar también los índices
+de subclase de ese nivel.
+
+**¿Por qué pasa?** Los precios de una subclase en una ciudad son los mismos para todos los
+hogares. La diferencia aparece al agregar a nacional, porque cada ciudad pesa distinto según el
+nivel de ingreso: el gasto de los hogares pobres en arroz no se reparte entre ciudades igual que
+el de los hogares de ingresos altos. Evidencia (oct-2026, 13 ciudades exportadas):
+
+- En el 99-100 % de las subclases, el índice nacional de cada nivel de ingreso cae dentro del
+  rango de los índices de las ciudades. Es lo esperable si es un promedio de ciudades.
+- La brecha Pobres–Altos de una subclase crece cuanto más difieren las ciudades entre sí
+  (correlación 0,57). Mediana de la brecha: 1,6 puntos en las subclases donde las ciudades se
+  parecen y 9,6 puntos donde difieren más.
 
 ## 2. De ciudades a nacional ⚠️ (solo aproximado)
 
