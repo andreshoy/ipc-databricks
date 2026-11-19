@@ -38,7 +38,8 @@ ingreso):
 | Índice | 164,94 | 165,33 | 161,85 | 157,33 | 161,30 |
 | Var. mensual | 0,30 % | 0,25 % | 0,21 % | 0,12 % | 0,20 % |
 
-(Falta comparar estos valores por nivel de ingreso con una cifra publicada.)
+Validado contra appindices: el IPC nacional de Pobres en oct-2026 es **164,92** publicado frente a
+164,94 calculado.
 
 **Importante:** el índice nacional de una misma subclase es distinto en cada nivel de ingreso
 (arroz oct-2026: Pobres 155,20, Vulnerables 154,33, Clase media 155,44, Altos 155,19, Total
@@ -46,10 +47,26 @@ ingreso):
 calcular un nivel de ingreso no basta con cambiar el ponderador: hay que usar también los índices
 de subclase de ese nivel.
 
-**¿Por qué pasa?** Los precios de una subclase en una ciudad son los mismos para todos los
-hogares. La diferencia aparece al agregar a nacional, porque cada ciudad pesa distinto según el
-nivel de ingreso: el gasto de los hogares pobres en arroz no se reparte entre ciudades igual que
-el de los hogares de ingresos altos. Evidencia (oct-2026, 13 ciudades exportadas):
+**¿Por qué pasa?** Hay dos fuentes de diferencia.
+
+**a) Dentro de cada ciudad, por los artículos.** Una subclase agrupa artículos (Frutas frescas
+incluye muchas frutas; Pastas incluye "para sopa" y "para seco"), y cada nivel de ingreso los
+pondera distinto. Comparación de Pobres contra Total en las 13 ciudades (oct-2026,
+`pobres_2026.xlsx` frente a `data.xlsx`):
+
+| Artículos en la subclase | Pares ciudad × subclase con índice idéntico |
+|---|---|
+| 1 artículo (p. ej. Arroz, Aguardiente) | 91 % |
+| 2-3 artículos | 19 % |
+| 4 o más artículos | 1 % |
+
+Las excepciones de un solo artículo son tarifas que dependen del estrato (agua, alcantarillado,
+aseo, electricidad), el arriendo imputado y algunos servicios. Ni los pesos de los artículos ni sus
+precios están publicados, así que **el índice de subclase de cada ciudad y cada nivel de ingreso
+hay que exportarlo**: no se puede derivar del Total.
+
+**b) Al pasar a nacional, por las ciudades.** Cada ciudad pesa distinto según el nivel de
+ingreso. Evidencia (oct-2026, 13 ciudades exportadas):
 
 - En el 99-100 % de las subclases, el índice nacional de cada nivel de ingreso cae dentro del
   rango de los índices de las ciudades. Es lo esperable si es un promedio de ciudades.
@@ -75,12 +92,13 @@ el DANE.
 
 ## 3. ¿Niveles de ingreso dentro de una ciudad?
 
-Haría falta `w(c,g,i)`, el peso de cada subclase para cada ingreso en cada ciudad, y no está
-publicado. Usar los ponderadores nacionales por ingreso en una ciudad da solo una **aproximación**,
-porque la canasta cambia entre ciudades (p. ej. el peso del transporte o del arriendo).
+**Sí, appindices los publica.** Con Nivel de ingresos = Pobres y Nivel de canasta = Total trae el
+IPC de Pobres para el nacional y las 13 ciudades (oct-2026: Cúcuta 175,75; Bogotá 162,59;
+Villavicencio 159,69…). No hay que estimar nada: se exporta.
 
-Si appindices publica directamente la combinación ciudad × nivel de ingreso, conviene exportarla
-en vez de calcularla.
+Calcularlo con los ponderadores nacionales no sería correcto por dos razones: la canasta de cada
+ciudad pesa distinto y, como se vio arriba, los índices de subclase de la ciudad también cambian
+según el nivel de ingreso.
 
 ## Qué usaremos en el proyecto
 
@@ -88,6 +106,6 @@ en vez de calcularla.
 |---|---|
 | Índices de subclase (nacional y ciudades, por ingreso) | Exportaciones de appindices |
 | Totales, divisiones, grupos y clases nacionales por ingreso | Cálculo con `w(g,i)` y validación contra lo publicado |
-| Totales por ciudad (y por ciudad × ingreso, si existe) | Exportar de appindices (niveles de canasta agregados) |
+| Totales por ciudad y por ciudad × ingreso | Exportar de appindices (nivel de canasta Total y demás niveles agregados, un archivo por nivel de ingreso) |
 | Contribuciones de cada subclase al cambio nacional | Cálculo con `w(g,i)` |
 | Brechas entre niveles de ingreso | Diferencia entre las variaciones de cada nivel de ingreso |
