@@ -1,0 +1,189 @@
+division_codigo,grupo_codigo,clase_codigo,subclase_codigo,subclase_nombre_dane,pobres,vulnerables,clase_media,altos,total
+01000000,01100000,01110000,01110100,Arroz,2.56,1.99,0.89,0.21,0.93
+01000000,01100000,01110000,01110200,Pastas Alimenticias,0.24,0.2,0.12,0.06,0.12
+01000000,01100000,01110000,01110300,Avena Y Sus Derivados,0.04,0.03,0.03,0.02,0.03
+01000000,01100000,01110000,01110500,Trigo Y Sus Derivados,0.04,0.03,0.02,0.01,0.02
+01000000,01100000,01110000,01110600,Maíz Y Sus Derivados,0.21,0.15,0.07,0.02,0.07
+01000000,01100000,01110000,01110800,Pan,1.21,1.06,0.71,0.31,0.68
+01000000,01100000,01110000,01119800,"Otras Harinas, Cereales Y Almidones",0.29,0.34,0.32,0.25,0.3
+01000000,01100000,01110000,01119900,Otros Productos De Panadería,0.33,0.32,0.3,0.19,0.27
+01000000,01100000,01120000,01120100,Carne De Res Y Derivados,2.77,2.88,2.05,0.82,1.88
+01000000,01100000,01120000,01120200,Carne De Cerdo Y Derivados,0.53,0.62,0.56,0.21,0.48
+01000000,01100000,01120000,01120300,Carne De Aves,2.04,1.91,1.32,0.56,1.24
+01000000,01100000,01120000,01120500,"Carnes Preparadas, Charcutería Y Otros Productos Conteniendo Carne",0.51,0.51,0.42,0.28,0.4
+01000000,01100000,01130000,01130300,Productos de rio y mar (incluye pescados y camarones frescos o congelados y pescado enlatado como sardinas y atún),0.89,0.78,0.6,0.46,0.6
+01000000,01100000,01140000,01140100,Leche,1.38,1.39,1.13,0.52,1.02
+01000000,01100000,01140000,01140200,Quesos Y Productos Afines,0.69,0.62,0.46,0.36,0.46
+01000000,01100000,01140000,01140500,Huevos,1.31,1.11,0.71,0.28,0.68
+01000000,01100000,01140000,01149900,Otros Derivados De La Leche,0.25,0.27,0.25,0.2,0.24
+01000000,01100000,01150000,01150100,Aceites Comestibles,0.76,0.66,0.48,0.25,0.45
+01000000,01100000,01150000,01150200,Mantequilla De Vaca,0.06,0.06,0.05,0.03,0.05
+01000000,01100000,01150000,01150500,Margarinas y grasas animales y vegetales,0.04,0.03,0.04,0.02,0.03
+01000000,01100000,01160000,01160200,Frutas Congeladas O En Pulpa,0.02,0.02,0.02,0.02,0.02
+01000000,01100000,01160000,01160300,"Frutos Secos Y Nueces, Cáscaras De Frutas Y Semillas Comestibles",0.01,0.01,0.02,0.04,0.02
+01000000,01100000,01160000,01160500,Naranjas,0.05,0.04,0.06,0.07,0.06
+01000000,01100000,01160000,01160600,Bananos,0.08,0.08,0.07,0.05,0.06
+01000000,01100000,01160000,01160700,Tomate de árbol,0.13,0.14,0.08,0.02,0.07
+01000000,01100000,01160000,01160800,Moras,0.09,0.11,0.07,0.03,0.07
+01000000,01100000,01160000,01160900,Frutas frescas,0.62,0.68,0.73,0.68,0.7
+01000000,01100000,01170000,01170200,Legumbres Secas,0.43,0.38,0.25,0.12,0.24
+01000000,01100000,01170000,01170300,Legumbres Y Hortalizas En Conserva Y Deshidratadas,0.06,0.04,0.06,0.07,0.06
+01000000,01100000,01170000,01170400,Plátanos,0.66,0.58,0.32,0.1,0.31
+01000000,01100000,01170000,01170500,Papas,0.56,0.52,0.31,0.1,0.3
+01000000,01100000,01170000,01170600,Yuca Para Consumo En El Hogar,0.22,0.19,0.11,0.03,0.11
+01000000,01100000,01170000,01171100,"Productos Derivados De Los Tubérculos, Raíces Y Plátanos",0.01,0.01,0.01,0.01,0.01
+01000000,01100000,01170000,01171200,"Arracacha, ñame y otros tubérculos",0.05,0.05,0.03,0.01,0.03
+01000000,01100000,01170000,01171300,Tomate,0.33,0.3,0.18,0.08,0.18
+01000000,01100000,01170000,01171400,Cebolla,0.41,0.38,0.2,0.08,0.2
+01000000,01100000,01170000,01171500,Zanahoria,0.06,0.06,0.05,0.02,0.04
+01000000,01100000,01170000,01171600,Hortalizas y legumbres frescas,0.41,0.44,0.36,0.23,0.34
+01000000,01100000,01180000,01180100,Azúcar Y Otros Endulzantes,0.49,0.44,0.26,0.11,0.26
+01000000,01100000,01180000,01180200,Panela Cruda Para Consumo En El Hogar,0.38,0.28,0.16,0.04,0.16
+01000000,01100000,01180000,01180300,"Jaleas, Mermeladas, Miel Y Similares",0.06,0.06,0.05,0.05,0.05
+01000000,01100000,01180000,01180500,"Dulces, Confites, Caramelos, Bombones, Chocolatinas, Chicles, Masmelos, Cocadas Para Consumo En El Hogar",0.1,0.09,0.06,0.04,0.06
+01000000,01100000,01180000,01180600,"Helados, Conos, Paletas, Vasitos, Refrescos Congelados Y Tortas Heladas Para Consumo En El Hogar",0.08,0.08,0.07,0.04,0.06
+01000000,01100000,01180000,01180700,"Gelatinas, Flanes Y Pudines En Polvo Para Preparar",0.01,0.02,0.01,0.01,0.01
+01000000,01100000,01190000,01190100,"Salsas, Pastas Y Aderezos",0.17,0.18,0.18,0.13,0.16
+01000000,01100000,01190000,01190200,Sal,0.04,0.03,0.02,0.01,0.02
+01000000,01100000,01190000,01190500,"Sopas, Cremas, Caldos Y Consomés",0.12,0.09,0.05,0.04,0.06
+01000000,01100000,01190000,01190600,"Frituras: Papas Fritas, Chitos, Maizitos, Patacones, Besitos, Etc, Para Consumo En El Hogar",0.16,0.15,0.12,0.09,0.11
+01000000,01100000,01190000,01190800,Condimentos y hierbas culinarias,0.11,0.09,0.07,0.04,0.06
+01000000,01100000,01190000,01191100,Leche En Polvo Para Lactantes,0.05,0.07,0.05,0.1,0.06
+01000000,01100000,01190000,01199900,"Otros Alimentos Precocidos Y Preparados: Ajiaco, Lenteja, Frijol, Lechona Enlatada Y Similares",0.02,0.01,0.01,0.01,0.01
+01000000,01200000,01210000,01210100,Café Y Productos A Base De Café,0.31,0.28,0.22,0.13,0.21
+01000000,01200000,01210000,01210200,Chocolate Y Productos A Base De Chocolate,0.25,0.22,0.2,0.11,0.18
+01000000,01200000,01210000,01210300,Té E Infusiones (Para Bebidas Calientes),0.01,0.01,0.01,0.02,0.01
+01000000,01200000,01220000,01220100,Agua Mineral (Con Y Sin Gas) Para Consumo En El Hogar,0.12,0.14,0.12,0.09,0.12
+01000000,01200000,01220000,01220600,"Refrescos Líquidos Empacados (Jugos, Té Fríos Y Bebidas Hidratantes)",0.17,0.17,0.14,0.1,0.14
+01000000,01200000,01220000,01220700,Concentrados Para Preparar Refrescos,0.11,0.08,0.03,0.01,0.03
+01000000,01200000,01220000,01221100,Gaseosas y maltas para consumo en el hogar,0.71,0.76,0.47,0.15,0.44
+01000000,01200000,01220000,01221200,"Bebidas energizantes y a base de arroz, soya, coco y similares",0.01,0.02,0.02,0.03,0.02
+02000000,02100000,02110000,02110100,Aguardiente,0.15,0.15,0.15,0.1,0.14
+02000000,02100000,02110000,02110500,"Whisky, ron, brandy, vodka, ginebra, cognac, tequila, cremas de licor y aperitivos",0.35,0.4,0.35,0.33,0.35
+02000000,02100000,02120000,02120100,"Vino, Champaña, Jerez Y Aperitivos A Base De Vino Para Consumo En El Hogar",0.07,0.06,0.07,0.11,0.08
+02000000,02100000,02130000,02130100,Cerveza Y Refajo,1.0,1.08,1.0,0.95,1.0
+02000000,02200000,02210000,02210100,"Cigarrillos, tabaco y derivados",0.25,0.19,0.15,0.04,0.13
+03000000,03100000,03120000,03120100,Prendas De Vestir Para Hombre,0.53,0.65,0.99,1.42,1.04
+03000000,03100000,03120000,03120200,Prendas De Vestir Para Mujer,0.78,0.8,1.07,1.34,1.09
+03000000,03100000,03120000,03120500,Prendas De Vestir Para Bebés,0.09,0.12,0.07,0.08,0.08
+03000000,03100000,03120000,03120600,Uniformes,0.44,0.43,0.24,0.11,0.24
+03000000,03100000,03120000,03120700,Prendas de vestir para niña y niño,0.68,0.66,0.47,0.3,0.46
+03000000,03100000,03130000,03131000,"Otros artículos y accesorios de vestir para hombre y mujer, incluyendo artículos de vestir para adulto y bebé y materiales",0.01,0.03,0.03,0.07,0.04
+03000000,03100000,03140000,03140200,Lavado Y Planchado De Ropa,0.04,0.01,0.09,0.2,0.1
+03000000,03200000,03210000,03210100,Calzado Para Hombre,0.22,0.28,0.43,0.47,0.41
+03000000,03200000,03210000,03210200,Calzado Para Mujer,0.25,0.24,0.35,0.42,0.35
+03000000,03200000,03210000,03210700,Calzado para niño y niña,0.26,0.28,0.18,0.1,0.18
+04000000,04100000,04130000,04130100,Arriendo efectivo,19.85,15.14,10.83,6.4,10.6
+04000000,04200000,04230000,04230100,Gasto en servicios de la vivienda ocupada por sus propietarios,11.78,12.73,14.54,15.97,14.56
+04000000,04300000,04310000,04310100,Materiales Para La Conservación Y La Reparación De La Vivienda,0.04,0.07,0.13,0.12,0.12
+04000000,04400000,04410000,04410100,Suministro De Agua,2.0,2.15,1.92,1.46,1.84
+04000000,04400000,04420000,04420100,Recogida De Basuras,0.57,0.5,0.43,0.24,0.4
+04000000,04400000,04430000,04430100,Alcantarillado,0.48,0.54,0.54,0.36,0.49
+04000000,04400000,04440000,04440100,Servicios Relacionados Con La Copropiedad,0.28,0.19,0.55,3.2,1.15
+04000000,04500000,04510000,04510100,Electricidad,3.56,3.53,3.13,2.11,2.94
+04000000,04500000,04520000,04520300,Gas,1.61,1.49,1.06,0.58,1.02
+05000000,05100000,05110000,05110100,Muebles,0.26,0.43,0.56,0.74,0.58
+05000000,05100000,05110000,05110200,Equipo De Iluminación,0.04,0.03,0.03,0.03,0.03
+05000000,05100000,05110000,05119900,Otros Artículos De Decoración,0.01,0.0,0.01,0.09,0.03
+05000000,05200000,05210000,05210200,Ropa confeccionada para cama,0.09,0.08,0.11,0.18,0.12
+05000000,05200000,05210000,05210700,Ropa de tocador y productos textiles del hogar,0.02,0.03,0.04,0.05,0.04
+05000000,05300000,05310000,05310100,"Neveras, Refrigeradores Y Congeladores",0.12,0.17,0.17,0.12,0.16
+05000000,05300000,05310000,05310200,"Lavadoras, Secadoras Y Lava-Vajillas",0.08,0.1,0.13,0.13,0.13
+05000000,05300000,05310000,05310300,"Estufas, Hornos Y Pipetas De Gas",0.05,0.05,0.04,0.04,0.04
+05000000,05300000,05320000,05320100,Aparatos Eléctricos Pequeños Para El Hogar,0.02,0.02,0.02,0.03,0.02
+05000000,05400000,05410000,05410100,"Cristalería y vajilla Artículos, vajillas y utensilios de vidrio, cristal, porcelana y cerámica para el hogar",0.07,0.07,0.06,0.06,0.06
+05000000,05400000,05410000,05410300,Utensilios de cocina y menaje no eléctricos,0.06,0.07,0.09,0.11,0.09
+05000000,05500000,05520000,05520300,Accesorios Eléctricos Pequeños,0.07,0.08,0.1,0.13,0.11
+05000000,05600000,05610000,05610100,Productos De Limpieza Y Mantenimiento,1.64,1.53,1.45,0.98,1.35
+05000000,05600000,05610000,05610200,Elementos De Aseo,0.18,0.16,0.17,0.13,0.16
+05000000,05600000,05610000,05610400,"Artículos De Ferretería: Puntillas, Clavos, Tornillos, Tuercas, Brocas, Brochas, Pinceles, Lijas Y Otros.",0.01,0.01,0.02,0.03,0.02
+05000000,05600000,05610000,05610600,Productos desechables y no duraderos para el hogar,0.17,0.17,0.21,0.19,0.2
+05000000,05600000,05620000,05620100,Servicio Doméstico,0.1,0.07,0.53,2.95,1.06
+06000000,06100000,06110000,06110300,Productos farmacéuticos y dermatológicos,1.13,0.96,0.93,1.29,1.03
+06000000,06100000,06120000,06120100,Elementos Implementos Médicos,0.04,0.04,0.03,0.02,0.03
+06000000,06100000,06130000,06130100,Artefactos Y Equipo Terapéutico Y Su Reparación,0.06,0.06,0.1,0.14,0.1
+06000000,06200000,06210000,06210100,Consulta Médica General Con Médico Particular,0.12,0.05,0.05,0.07,0.06
+06000000,06200000,06210000,06210500,"Consulta médica con médico especialista particular (incluye ortodoncia): pediatría, oftalmología, ginecología, siquiatría, traumatología, cardiología y otros especialistas",0.08,0.13,0.18,0.2,0.18
+06000000,06200000,06220000,06220100,"Servicios Odontológicos Con Odontólogos Particulares: Consultas, Profilaxis, Exodoncias (Extracción), Amalgamas, Sellantes, Fluorización.",0.02,0.05,0.1,0.39,0.17
+06000000,06200000,06230000,06230100,"Servicios Para Particulares En Centros De Rayos X: Radiografías (Incluyendo Las Dentales), Urografías, Mamografías, Electrocardiogramas Y Otras Imágenes Diagnósticas",0.0,0.01,0.03,0.02,0.02
+06000000,06200000,06230000,06230200,"Exámenes De Laboratorio Para Particulares: De Sangre, Bacteriológicos, Etc.",0.01,0.02,0.01,0.03,0.02
+06000000,06200000,06230000,06230300,Servicios Médicos Auxiliares No Hospitalarios,0.0,0.01,0.02,0.08,0.04
+06000000,06300000,06310000,06310300,"Servicios médicos menores (pequeña cirugía, cirugía ambulatoria, urgencias, etc.)",0.05,0.06,0.06,0.09,0.07
+07000000,07100000,07110000,07110100,Vehículo Particular Nuevo O Usado,0.02,0.43,2.23,5.21,2.65
+07000000,07100000,07120000,07120100,Motos Y Bicicletas Con Motor Nuevas O Usadas,0.13,0.18,0.3,0.13,0.23
+07000000,07100000,07130000,07130100,Compra De Bicicletas Nuevas O Usadas (Excepto Para Niños),0.03,0.02,0.04,0.07,0.05
+07000000,07200000,07210000,07210100,"Llantas Y Neumáticos, Rines Para Vehículo",0.04,0.03,0.08,0.11,0.08
+07000000,07200000,07210000,07210300,"Productos Para La Limpieza Y Conservación Del Vehículo: Pintura, Limpiadores, Selladores, Shampoo, Ceras, Ambientadores, Eliminador De Olores, Pañitos Húmedos Para Vehículos, Etc.",0.0,0.01,0.03,0.04,0.03
+07000000,07200000,07210000,07210600,"Piezas Para Bicicleta: Llantas, Neumáticos, Rines, Manzanas, Cadenas, Cambios, Piñones, Guallas, Sillines, Candados Y Cable Candado, Luces, Etc.",0.0,0.01,0.02,0.02,0.02
+07000000,07200000,07210000,07219900,Otras Piezas De Repuesto Para Vehículo,0.01,0.07,0.14,0.21,0.14
+07000000,07200000,07220000,07220400,"Aditivos, Valvulinas, Líquido Para Frenos, Refrigerantes, Agua Para Batería, Etc.",0.0,0.01,0.03,0.04,0.03
+07000000,07200000,07220000,07220500,Combustibles para vehículos,1.23,2.18,2.97,3.39,2.91
+07000000,07200000,07230000,07230100,"Mantenimiento Y Reparaciones Efectuadas En El Taller: Engrase, Sincronización, Revisiones Técnicas, Instalaciones De Partes Y Accesorios, Balanceo De Ruedas, Despinchada, Lavado Y Polichado, Servicios De Grúa, Etc.",0.13,0.23,0.45,0.73,0.48
+07000000,07200000,07230000,07230200,Compra Y Cambio De Aceite,0.06,0.1,0.17,0.24,0.18
+07000000,07200000,07230000,07230300,Servicios De Latonería Y Pintura,0.0,0.0,0.02,0.05,0.02
+07000000,07200000,07240000,07240100,Parqueaderos,0.1,0.11,0.29,0.53,0.32
+07000000,07200000,07240000,07240200,Peajes,0.03,0.03,0.1,0.36,0.15
+07000000,07200000,07240000,07240300,"Gastos Reglamentarios Relacionados Con La Propiedad, Manejo Y Alquiler De Vehículos",0.04,0.08,0.13,0.12,0.12
+07000000,07300000,07330000,07330100,Transporte De Pasajeros Y Equipaje En Avión (Incluye Pagos Por Exceso De Equipaje),0.0,0.0,0.11,0.69,0.23
+07000000,07300000,07370000,07371000,Transporte urbano (incluye tren y metro),4.82,6.05,5.18,2.47,4.62
+07000000,07300000,07370000,07372000,"Transporte intermunicipal, interveredal e internacional",0.3,0.29,0.38,0.23,0.33
+07000000,07300000,07370000,07373000,Transporte escolar,0.12,0.23,0.32,0.48,0.34
+08000000,08200000,08210000,08210200,"Equipos de telefonía móvil, similares y reparación",0.19,0.21,0.38,0.46,0.37
+08000000,08300000,08310000,08310400,Servicios de comunicación fija y móvil y provisión a internet,2.47,3.03,4.21,4.1,3.96
+09000000,09100000,09110000,09110100,"Equipo Para La Recepción, Grabación Y Reproducción De Sonido Únicamente",0.01,0.04,0.04,0.06,0.04
+09000000,09100000,09110000,09110200,"Equipo Para La Grabación, Recepción Y Reproducción De Imagen Y Sonido",0.06,0.14,0.22,0.26,0.21
+09000000,09100000,09130000,09130100,Aparatos De Procesamiento De Información Y Hardware,0.06,0.11,0.13,0.21,0.15
+09000000,09300000,09310000,09310200,Juegos Y Juguetes Infantiles,0.07,0.1,0.12,0.14,0.12
+09000000,09300000,09310000,09310300,"Artículos, Adornos Y Prendas De Vestir Para Fiestas",0.07,0.09,0.13,0.18,0.14
+09000000,09300000,09330000,09330200,"Plantas Naturales: Ramos De Flores, Matas, Arbustos",0.01,0.01,0.03,0.07,0.04
+09000000,09300000,09340000,09340200,Alimentos Para Animales Domésticos Y Mascotas,0.15,0.18,0.27,0.24,0.25
+09000000,09300000,09340000,09340300,"Productos Para Animales Domésticos Y Mascotas, Productos De Veterinaria, Artículos Para El Cuidado E Higiene (Shampoo, Jabón, Desodorantes) Y Accesorios Para Mascotas (Collares, Perrera, Jaula, Acuarios Y Otros)",0.02,0.02,0.06,0.07,0.05
+09000000,09300000,09350000,09350100,"Servicios De Veterinaria Y De Otro Tipo Para Animales Domésticos: Cuidado, Salón De Belleza, Alojamiento, Entrenamiento, Paseadores De Perros Y Colegios Para Mascotas Etc.",0.03,0.04,0.1,0.17,0.11
+09000000,09400000,09410000,09410100,Servicios Recreativos,0.09,0.12,0.18,0.43,0.23
+09000000,09400000,09410000,09410200,Servicios Prestados Por Escenarios Deportivos,0.02,0.02,0.04,0.52,0.16
+09000000,09400000,09420000,09420100,Cines Y Teatros,0.09,0.1,0.25,0.43,0.27
+09000000,09400000,09420000,09420600,Suscripción Y Servicio De Televisión Por Redes Y Cable,1.02,0.97,0.91,0.69,0.87
+09000000,09500000,09510000,09510100,Libros Y Lista De Útiles Escolares Completa,0.04,0.05,0.06,0.13,0.07
+09000000,09500000,09510000,09510200,"Libros De Texto: Textos Guías Para Clase (Incluye Libros De Literatura, Poesía, Etc, Requeridos En Clase)",0.17,0.18,0.15,0.08,0.14
+09000000,09500000,09520000,09520400,Compra de periódicos,0.06,0.09,0.1,0.09,0.09
+09000000,09500000,09530000,09530100,Material Impreso Diverso,0.0,0.0,0.0,0.03,0.01
+09000000,09500000,09540000,09540100,"Artículos De Papelería: Cuadernos, Agendas, Papel Suelto Y En Resmas",0.28,0.21,0.12,0.05,0.12
+09000000,09500000,09540000,09540200,Artículos Para Escribir,0.24,0.25,0.11,0.04,0.12
+09000000,09500000,09540000,09540300,Artículos Para Pintura Y Dibujo,0.04,0.07,0.03,0.01,0.04
+09000000,09600000,09610000,09610300,"Paquetes turísticos completos, incluye paquetes de viajes de excursión realizados durante un día (sin pernoctar)",0.06,0.09,0.42,1.26,0.57
+10000000,10100000,10110000,10110400,Educación preescolar y básica primaria,0.65,0.7,1.26,2.45,1.46
+10000000,10200000,10210000,10210100,Educación Secundaria,0.25,0.32,0.93,1.33,0.92
+10000000,10400000,10410000,10410100,"Inscripciones y matrículas en carreras técnicas, tecnológicas y universitarias",0.68,0.52,1.54,1.41,1.33
+10000000,10400000,10410000,10410200,"Inscripciones y matrículas en postgrados (especialización, maestría, doctorado)",0.01,0.01,0.16,0.65,0.26
+10000000,10400000,10410000,10419900,Otros gastos en educación superior,0.01,0.03,0.11,0.23,0.13
+10000000,10500000,10510000,10510100,Cursos de educación no formal,0.04,0.14,0.24,0.39,0.26
+10000000,10500000,10510000,10510400,"Diplomados, educación continuada, preicfes, preuniversitarios",0.0,0.0,0.02,0.03,0.02
+10000000,10500000,10510000,10510800,Pagos por asesorías de tareas y clases dictadas por particulares,0.0,0.01,0.03,0.06,0.04
+11000000,11100000,11110000,11110100,"Comidas En Establecimientos De Servicio A La Mesa Y Autoservicio, Medios De Transporte, Maquinas Expendedoras, Puestos Móviles, Y Lugares De Esparcimiento; Se Incluyen También Las Contratadas Por Encargo, Para Llevar Y Por Servicio A Domicilio",4.26,4.78,6.28,7.23,6.24
+11000000,11100000,11110000,11110200,"Bebidas Calientes: Tinto, Café Con Leche, Chocolate, Té, Bebida Achocolatada Caliente, Leche, Agua De Panela, Agua Aromática, Avena Caliente Y Similares Para Consumo Inmediato, En Establecimientos De Servicio A La Mesa Y Autoservicio, Medios De Transporte",0.2,0.23,0.23,0.17,0.22
+11000000,11100000,11110000,11110300,"Gaseosa Y Otros Refrescos En Establecimientos De Servicio A La Mesa Y Autoservicio, Medios De Transporte, Maquinas Expendedoras, Puestos Móviles, Y Lugares De Esparcimiento; Se Incluyen También Las Adquiridas Para Llevar Y Servicio A Domicilio",0.45,0.49,0.35,0.13,0.32
+11000000,11100000,11110000,11110400,"Comidas Preparadas Fuera Del Hogar Para Consumo Inmediato, En Establecimientos De Servicio A La Mesa Y Autoservicio, Puestos Móviles, Lugares De Esparcimiento, Para Llevar Y Por Servicio A Domicilio",2.06,2.32,2.07,1.35,1.92
+11000000,11100000,11110000,11110700,"Gastos en discotecas, bares, griles, tabernas, fondas y tiendas dentro y al aire libre (comida, bebidas, cover)",0.23,0.3,0.38,0.58,0.41
+11000000,11100000,11120000,11120100,Pago Por Alimentación En Comedores,0.02,0.01,0.04,0.22,0.08
+11000000,11200000,11210000,11210100,"Servicios de alojamiento en hoteles, pensiones, posadas, hostales y moteles; alojamiento en centros de vacaciones y por motivo de enseñanza: internados",0.01,0.03,0.12,0.61,0.23
+12000000,12100000,12110000,12110100,Servicios Prestados En Salones De Peluquería Y Establecimientos De Cuidado Personal,0.73,0.72,0.81,0.88,0.81
+12000000,12100000,12120000,12120100,Aparatos Eléctricos Para El Cuidado Personal Y Su Reparación,0.01,0.02,0.03,0.02,0.02
+12000000,12100000,12130000,12130100,Artículos Para El Cuidado Y La Atención Personal,0.09,0.1,0.1,0.06,0.09
+12000000,12100000,12130000,12130200,Artículos Para Higiene Corporal,1.72,1.81,1.62,1.12,1.52
+12000000,12100000,12130000,12130300,Artículos Para La Higiene Oral,0.47,0.45,0.41,0.26,0.38
+12000000,12100000,12130000,12130400,Productos De Belleza,0.27,0.29,0.38,0.39,0.36
+12000000,12100000,12130000,12139900,Otros Productos Para El Aseo Personal,1.44,1.46,1.01,0.51,0.96
+12000000,12300000,12310000,12310100,"Artículos En Oro, Plata Y Piedras Preciosas Y Su Reparación",0.02,0.03,0.06,0.14,0.08
+12000000,12300000,12310000,12310200,"Relojes, Cronómetros, Termómetros, Barómetros Y Su Reparación",0.0,0.01,0.02,0.07,0.03
+12000000,12300000,12310000,12310300,Artículos De Fantasía Y Su Reparación,0.01,0.01,0.02,0.04,0.03
+12000000,12300000,12320000,12320100,Artículos De Viaje Y Otros Artículos Para El Transporte De Efectos Personales,0.02,0.04,0.06,0.11,0.07
+12000000,12300000,12320000,12320200,Artículos Para Bebés Y Su Reparación,0.03,0.05,0.02,0.03,0.03
+12000000,12300000,12320000,12320400,"Artículos Personales Varios Como: Gafas De Sol, Lentes De Contacto Cosméticos, Bastones, Paraguas Y Sombrillas, Abanicos, Llaveros, Etc",0.0,0.01,0.02,0.05,0.02
+12000000,12400000,12410000,12410100,Servicios de protección social dentro y fuera del hogar,0.01,0.0,0.05,0.07,0.05
+12000000,12400000,12410000,12410200,"Guarderías, salacunas, cuidado de niños fuera del hogar y servicios de adopción",0.2,0.26,0.29,0.3,0.29
+12000000,12400000,12410000,12410300,Cuotas moderadoras a EPS,0.01,0.06,0.07,0.1,0.07
+12000000,12500000,12530000,12530100,"Seguros Médicos, De Accidentes Y Medicina Prepagada",0.02,0.01,0.05,0.35,0.12
+12000000,12500000,12540000,12540100,Seguros De Vehículos Y Otros Relacionados Con El Transporte,0.05,0.02,0.1,0.38,0.16
+12000000,12600000,12620000,12620400,Servicios auxiliares y financieros prestados a cambio de una comisión explicita,0.02,0.04,0.13,0.29,0.15
+12000000,12700000,12710000,12710500,"Certificados, documentos administrativos y pago de honorarios",0.02,0.01,0.05,0.1,0.06
+12000000,12700000,12710000,12719900,Otros pagos por servicios,0.07,0.06,0.05,0.04,0.05

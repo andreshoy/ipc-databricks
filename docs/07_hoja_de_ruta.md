@@ -17,7 +17,7 @@ Repo, entorno local, cuenta Free Edition, catálogo, volumen y primer archivo ex
 - Calidad de datos: chequeos simples (meses faltantes, índices nulos, duplicados).
 
 ## Etapa 3 · Orquestación
-- Job `ipc_mensual` definido en el bundle (`resources/ipc_job.yml`) con tareas
+- Job `ipc_mensual` creado a mano en **Jobs & Pipelines** con tareas
   bronze → silver → gold → refresco de dashboard.
 - Disparador **file arrival** sobre `/Volumes/ipc/bronze/raw/mensual/`: al subir el archivo del mes
   se ejecuta todo. (Si el disparador no estuviera disponible en Free Edition, usar horario mensual,
@@ -29,9 +29,10 @@ Repo, entorno local, cuenta Free Edition, catálogo, volumen y primer archivo ex
   y variación anual, tabla detallada, mapa/barras por ciudad.
 - **Resumen del último mes**: KPIs (inflación mensual, anual, año corrido), top 10 subclases que más
   subieron/bajaron, divisiones con mayor contribución, evolución de brechas por ingreso y ciudad.
-- Ambos versionados en el repo (`*.lvdash.json`) y desplegados con el bundle.
+- Construidos a mano en la interfaz; luego se pueden exportar al repo (`*.lvdash.json`).
 
 ## Etapa 5 · Mejoras opcionales
 - Databricks App (Streamlit) para una consulta más personalizada.
 - Genie (preguntas en lenguaje natural sobre las tablas gold).
-- CI con GitHub Actions: `pytest` + `databricks bundle validate/deploy` en cada push a `main`.
+- CI con GitHub Actions: `pytest` en cada push a `main`.
+- (Avanzado) Databricks CLI y Asset Bundles para desplegar como código.

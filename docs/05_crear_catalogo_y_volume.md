@@ -12,20 +12,12 @@ Vas a correr tu primer notebook: [notebooks/00_setup_catalogo.py](../notebooks/0
 
 ### Si falla con un error de permisos al crear el catálogo
 En la parte superior del notebook hay un campo (widget) **Catálogo**. Cámbialo a `workspace`, corre
-de nuevo, y define la variable de entorno al trabajar localmente:
-`export IPC_CATALOG=workspace` (ver [src/ipc/config.py](../src/ipc/config.py)).
+de nuevo, y avísame para cambiar el valor por defecto en [src/ipc/config.py](../src/ipc/config.py).
 
 ## Verificar en la interfaz
 
 1. Menú **Catalog** → busca `ipc`.
 2. Despliega `bronze` → **Volumes** → `raw`. Dentro verás las carpetas `historico` y `mensual`.
-
-## Verificar desde la terminal
-
-```bash
-databricks schemas list ipc
-databricks fs ls dbfs:/Volumes/ipc/bronze/raw
-```
 
 ## ✅ Checkpoint
 Existe el volumen `ipc.bronze.raw` con las carpetas `historico/` y `mensual/`.

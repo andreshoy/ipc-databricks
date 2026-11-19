@@ -8,7 +8,7 @@ Sigue los pasos en orden; cada uno termina con un **✅ Checkpoint** para saber 
 | [01 · Crear cuenta Free Edition](01_crear_cuenta_free_edition.md) | Registro y tour por la interfaz | 15 min |
 | [02 · Conceptos clave](02_conceptos_clave.md) | Lo mínimo que hay que entender (lectura) | 15 min |
 | [03 · Conectar GitHub](03_conectar_github.md) | Traer este repo al workspace | 10 min |
-| [04 · CLI y entorno local](04_cli_y_entorno_local.md) | Manejar Databricks desde tu terminal | 15 min |
+| [04 · Entorno local (opcional)](04_cli_y_entorno_local.md) | Editar en VS Code y sincronizar con Git | 10 min |
 | [05 · Catálogo y volumen](05_crear_catalogo_y_volume.md) | Correr tu primer notebook | 10 min |
 | [06 · Exportar desde appindices](06_exportar_desde_appindices.md) | Bajar el IPC y subirlo a Databricks | 20 min |
 | [07 · Hoja de ruta](07_hoja_de_ruta.md) | Lo que construiremos después | lectura |

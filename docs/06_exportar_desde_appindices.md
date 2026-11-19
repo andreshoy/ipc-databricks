@@ -85,15 +85,20 @@ archivo y elimina duplicados si un mes llega dos veces.
 | `data/historico/` | `/Volumes/ipc/bronze/raw/historico/` |
 | `data/mensual/` | `/Volumes/ipc/bronze/raw/mensual/` |
 
-**Subir por la interfaz web**: **Catalog** → `ipc` → `bronze` → **Volumes** → `raw` → carpeta →
-**Upload to this volume**.
+**Subir**: **Catalog** → `ipc` → `bronze` → **Volumes** → `raw` → entra a la carpeta →
+**Upload to this volume** → arrastra uno o varios archivos a la vez.
 
-**Subir por terminal** (requiere el paso 04), toda la carpeta de una vez:
+## Ponderadores (archivos de referencia)
 
-```bash
-databricks fs cp -r data/historico dbfs:/Volumes/ipc/bronze/raw/historico
-databricks fs ls dbfs:/Volumes/ipc/bronze/raw/historico
-```
+En [referencia/](../referencia/) están los ponderadores oficiales del IPC base 2018 (página
+[IPC ponderadores](https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-de-precios-al-consumidor-ipc/ipc-actualizacion-metodologica-2019/ipc-ponderadores)
+del DANE), con los códigos de la jerarquía:
+
+- `ponderadores_subclase.csv`: 188 subclases × Pobres, Vulnerables, Clase Media, Altos, Total
+- `ponderadores_division.csv`: 12 divisiones
+- `ponderadores_ciudad.csv`: peso de 23 ciudades en el total nacional
+
+Súbelos a una carpeta `referencia/` dentro del volumen `raw` (créala con **Create directory**).
 
 ## Explorar el primer archivo
 
