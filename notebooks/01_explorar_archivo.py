@@ -35,9 +35,12 @@ print(f"Leyendo: {archivo}")
 if archivo.lower().endswith(".csv"):
     df = pd.read_csv(archivo, sep=None, engine="python", encoding="utf-8-sig")
 else:
-    # Power BI suele dejar alguna fila de encabezado/nota: revisamos las primeras filas
-    print(pd.read_excel(archivo, header=None, nrows=5))
-    df = pd.read_excel(archivo)
+    # La exportación de Power BI trae 2 filas de encabezado (medidas y dimensiones) y un pie
+    # con "Filtros aplicados" (y un aviso si se truncó). Usamos la segunda fila como encabezado.
+    crudo = pd.read_excel(archivo, header=None, dtype=str)
+    print("\n".join(crudo.iloc[-3:, 0].dropna()))  # pie del archivo
+    df = pd.read_excel(archivo, header=1, dtype=str)
+    df = df[df["Año"].str.fullmatch(r"\d{4}", na=False)]
 
 display(df.head(20))
 

@@ -7,73 +7,98 @@ pantalla y se exportan con un botón, pero no hay una API ni enlaces directos a 
 el cómputo de Databricks Free Edition solo puede salir a internet hacia algunos dominios de
 confianza y no tiene navegador. Por eso:
 
-- **Tú**: exportas el archivo y lo subes al volumen (≈5 minutos al mes).
+- **Tú**: exportas el archivo y lo subes al volumen.
 - **Databricks**: detecta el archivo nuevo y hace todo lo demás (etapa 2).
 
 Guía oficial del DANE: <https://appindices.dane.gov.co/resources/pdf/guia_de_usuario.pdf>
 
-## Filtros a seleccionar en appindices
+## El query mensual
+
+![Filtros del query mensual](img/pantallazo_query.jpeg)
 
 | Filtro | Selección |
 |---|---|
-| Año | El/los año(s) del tramo (ver abajo) |
-| Mes | **Seleccionar todo** (o solo el mes nuevo en la actualización mensual) |
-| Cobertura geográfica | **Total Nacional y Ciudades** |
-| Ciudad | **Seleccionar todo** |
-| Nivel de ingresos | **Seleccionar todo** (Total, Altos, Clase Media, Vulnerables, Pobres) |
-| Nivel de canasta | **Total, División, Grupo, Clase, Subclase** (todos) |
-| División / Grupo / Clase / Subclase | **Seleccionar todo** |
-| Valor | **Número Índice** y **Variación Mensual, Año Corrido, Anual** |
+| Año / Mes | El mes nuevo (p. ej. 2026 / Oct) |
+| Cobertura geográfica | Todas |
+| Ciudad | Todas |
+| Nivel de ingresos | **Uno a la vez** (ver límite abajo) |
+| Nivel de canasta | Subclase |
+| División / Grupo / Clase / Subclase | Todas |
+| Valor a graficar | Ver recomendación abajo |
 
-Luego, sobre la tabla de resultados: menú **⋯** (arriba a la derecha de la tabla) →
-**Exportar datos** → formato **.xlsx** (permite hasta 150.000 filas; el .csv solo 30.000).
+Luego, sobre la tabla: menú **⋯** → **Exportar datos** → **.xlsx**.
 
-## Cuántas filas salen y cómo partir el histórico
+## Lo que trae el archivo (revisado con un ejemplo real)
 
-Estimación (por confirmar con tu primer archivo):
-~39 geografías (nacional + 38 ciudades) × 5 niveles de ingreso × ~330 rubros (todos los niveles de
-canasta) ≈ **64.000 filas por mes**.
+- Hoja `Export`. Dos filas de encabezado: nombres de medidas y nombres de dimensiones.
+- Columnas: Año, Mes, Nivel de ingresos, Nivel de canasta, División, Grupo, Clase, Subclase
+  (como `01110100 - Arroz`: código + nombre), Cobertura Geografica (ciudad) y 15 medidas:
+  Número Índice y Variación / Contribución / Participación (mensual, año corrido, anual,
+  trimestral, semestral).
+- Los números vienen como texto con coma decimal (`155,06`). Hay celdas vacías (no publicadas).
+- **14 geografías**: Nacional + 13 ciudades (Barranquilla, Bogotá, Bucaramanga, Cali, Cartagena,
+  Cúcuta, Manizales, Medellín, Montería, Neiva, Pasto, Pereira, Villavicencio). San Andrés y
+  Quibdó vienen excluidas por el reporte.
+- ~188 subclases por ciudad → **~2.630 filas por mes** por cada nivel de ingresos.
+- Al final: "Filtros aplicados: ..." (útil como auditoría).
 
-- **Actualización mensual**: 1 mes ≈ 64.000 filas → **un solo archivo .xlsx**. ✔️
-- **Carga histórica** (ene-2019 → hoy, ~95 meses ≈ 6 millones de filas): no cabe en una sola
-  exportación. Opciones:
-  1. **Recomendado para empezar**: exporta el histórico solo con nivel de canasta
-     **Total + División** (≈ 39 × 5 × 13 × 12 ≈ 30.000 filas por año → un archivo por año o
-     uno cada 4 años). Con eso ya funcionan los tableros por división de gasto.
-  2. Para el detalle completo (subclase) histórico: exporta de a **2 meses** por archivo, o por
-     año filtrando grupos de ciudades. Es tedioso pero se hace una sola vez; lo podemos hacer
-     gradualmente.
+El lector [src/ipc/lector.py](../src/ipc/lector.py) ya entiende este formato.
 
-  Si el filtro de Año no muestra 2018: el IPC base 2018 arranca en diciembre de 2018 (= 100) y la
-  metodología nueva desde enero de 2019. Exporta lo que esté disponible.
+## ⚠️ Límite real de exportación
 
-Si la exportación supera el límite, Power BI corta en silencio o muestra un aviso: **verifica que
-el último mes/ciudad esperado esté en el archivo**.
+Una exportación de un año completo **se cortó en ~9.400 filas** (enero a marzo completos y abril
+a medias) y trajo al final el aviso:
+`Exported data exceeded the allowed volume. Some data may have been omitted.`
+
+El lector rechaza archivos con ese aviso, así que no se cuelan datos incompletos.
+
+**Cómo exportar sin pasarse** (con las 15 medidas, cada archivo admite ~3 meses):
+
+| Exportación | Contenido | Filas aprox. | Archivos |
+|---|---|---|---|
+| Mensual | 1 mes × 1 nivel de ingresos | 2.630 | 5 por mes (uno por nivel de ingresos) |
+| Histórico | 3 meses × 1 nivel de ingresos | 7.900 | 4 por año por nivel de ingresos |
+
+> **Prueba sugerida**: el límite de Power BI puede depender del total de celdas y no solo de las
+> filas. Exporta un año con *Valor a graficar* = solo **Número Índice, Variación Mensual,
+> Variación Anual, Contribución Mensual y Contribución Anual** y revisa si llega diciembre. Si
+> llega, el histórico se reduce mucho (un archivo por año por nivel de ingresos).
+
+Prioridad para el histórico: primero **Total Nivel de Ingresos** (2019 → hoy); después los demás
+niveles de ingresos, que son los que permiten analizar las brechas.
 
 ## Nombres de archivo (convención)
 
-- Histórico: `historico/ipc_division_2019_2022.xlsx`, `historico/ipc_subclase_2024_01-02.xlsx`
-- Mensual: `mensual/ipc_2026_10.xlsx` (año_mes de los datos, no de la descarga)
+`ipc_<nivel>_<año>_<mesinicial>-<mesfinal>.xlsx`, con nivel en `total`, `altos`, `media`,
+`vulnerables`, `pobres`:
 
-## Subir el archivo al volumen
+- Histórico: `historico/ipc_total_2019_01-03.xlsx`
+- Mensual: `mensual/ipc_total_2026_10.xlsx`, `mensual/ipc_pobres_2026_10.xlsx`
 
-**Opción 1 · Interfaz web**: **Catalog** → `ipc` → `bronze` → **Volumes** → `raw` → entra a la
-carpeta `mensual` (o `historico`) → **Upload to this volume** → arrastra el archivo.
+El nombre es solo para que tú te orientes: el proceso lee año, mes e ingreso del contenido del
+archivo y elimina duplicados si un mes llega dos veces.
 
-**Opción 2 · Terminal** (requiere el paso 04):
+## Dónde guardar los archivos
+
+| En tu computador (no se sube a GitHub) | En Databricks |
+|---|---|
+| `data/historico/` | `/Volumes/ipc/bronze/raw/historico/` |
+| `data/mensual/` | `/Volumes/ipc/bronze/raw/mensual/` |
+
+**Subir por la interfaz web**: **Catalog** → `ipc` → `bronze` → **Volumes** → `raw` → carpeta →
+**Upload to this volume**.
+
+**Subir por terminal** (requiere el paso 04), toda la carpeta de una vez:
 
 ```bash
-databricks fs cp ~/Downloads/ipc_2026_10.xlsx dbfs:/Volumes/ipc/bronze/raw/mensual/
-databricks fs ls dbfs:/Volumes/ipc/bronze/raw/mensual
+databricks fs cp -r data/historico dbfs:/Volumes/ipc/bronze/raw/historico
+databricks fs ls dbfs:/Volumes/ipc/bronze/raw/historico
 ```
-
-Los archivos no se suben a GitHub (están en `.gitignore`): los datos viven en Databricks.
 
 ## Explorar el primer archivo
 
 Abre [notebooks/01_explorar_archivo.py](../notebooks/01_explorar_archivo.py) en Databricks y dale
-**Run all**. La celda **Resumen** muestra columnas, tipos y valores de ejemplo.
+**Run all** para confirmar que Databricks lee el archivo.
 
 ## ✅ Checkpoint
-Hay al menos un archivo en `/Volumes/ipc/bronze/raw/mensual/` y el notebook 01 muestra su resumen.
-**Copia ese resumen y compártelo**: con él diseñamos las tablas silver y gold (etapa 2).
+Hay archivos en `/Volumes/ipc/bronze/raw/` y el notebook 01 muestra su resumen.
