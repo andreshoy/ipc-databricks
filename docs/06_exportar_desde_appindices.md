@@ -44,25 +44,30 @@ Luego, sobre la tabla: menú **⋯** → **Exportar datos** → **.xlsx**.
 
 El lector [src/ipc/lector.py](../src/ipc/lector.py) ya entiende este formato.
 
-## ⚠️ Límite real de exportación
+## ⚠️ Límites de exportación (probados)
 
-Una exportación de un año completo **se cortó en ~9.400 filas** (enero a marzo completos y abril
-a medias) y trajo al final el aviso:
-`Exported data exceeded the allowed volume. Some data may have been omitted.`
+Power BI exporta en dos formatos y el lector entiende ambos:
 
-El lector rechaza archivos con ese aviso, así que no se cuelan datos incompletos.
-
-**Cómo exportar sin pasarse** (con las 15 medidas, cada archivo admite ~3 meses):
-
-| Exportación | Contenido | Filas aprox. | Archivos |
+| Formato | Cómo se ve | Límite | Aviso al final/inicio |
 |---|---|---|---|
-| Mensual | 1 mes × 1 nivel de ingresos | 2.630 | 5 por mes (uno por nivel de ingresos) |
-| Histórico | 3 meses × 1 nivel de ingresos | 7.900 | 4 por año por nivel de ingresos |
+| Ancho (una columna por medida) | `data.xlsx` de ejemplo | ~9.400 filas | `Exported data exceeded the allowed volume` |
+| **Largo** (una fila por medida) | columnas `Medida` y `Medida_Dinamica` | **150.000 filas** | `Exported data limited to 150000 rows` |
 
-> **Prueba sugerida**: el límite de Power BI puede depender del total de celdas y no solo de las
-> filas. Exporta un año con *Valor a graficar* = solo **Número Índice, Variación Mensual,
-> Variación Anual, Contribución Mensual y Contribución Anual** y revisa si llega diciembre. Si
-> llega, el histórico se reduce mucho (un archivo por año por nivel de ingresos).
+El lector **rechaza** archivos con cualquiera de esos avisos, así que no se cuelan datos
+incompletos.
+
+En formato largo, cada mes y nivel de ingresos ocupa **4.512 filas por medida** (188 subclases ×
+24 geografías; las 10 ciudades pequeñas y "Otras áreas urbanas" salen vacías a nivel de subclase,
+pero igual cuentan para el límite). Con las 16 medidas son 72.000 filas por mes, así que un año
+no cabe.
+
+**Recomendación: exportar solo `Número Índice`.** Las variaciones (mensual, anual, año corrido…)
+se calculan a partir del índice, y las contribuciones se calculan con los ponderadores. Así:
+
+| Exportación | Filtros | Filas aprox. | Archivos |
+|---|---|---|---|
+| Histórico | 1 año · 1 nivel de ingresos · niveles de canasta Total+División+Grupo+Clase+Subclase · Valor = Número Índice | ~94.000 | 1 por año por nivel de ingresos (8 años × 5 = 40) |
+| Mensual | 1 mes · **todos** los niveles de ingresos · todos los niveles de canasta · Número Índice | ~39.000 | 1 por mes |
 
 Prioridad para el histórico: primero **Total Nivel de Ingresos** (2019 → hoy); después los demás
 niveles de ingresos, que son los que permiten analizar las brechas.
