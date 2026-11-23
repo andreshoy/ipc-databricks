@@ -33,7 +33,9 @@ Repo, entorno local, cuenta Free Edition, catálogo, volumen y primer archivo ex
   y variación anual, tabla detallada, mapa/barras por ciudad.
 - **Resumen del último mes**: KPIs (inflación mensual, anual, año corrido), top 10 subclases que más
   subieron/bajaron, divisiones con mayor contribución, evolución de brechas por ingreso y ciudad.
-- Construidos a mano en la interfaz; luego se pueden exportar al repo (`*.lvdash.json`).
+- El **Resumen** está versionado en `dashboards/ipc_resumen_mes.lvdash.json` (páginas Resumen y
+  Brechas): se abre desde la Git folder tras un Pull. Los cambios hechos en la interfaz se guardan
+  en ese mismo archivo y se suben con Commit & Push.
 
 ## Etapa 5 · Mejoras opcionales
 - Descarga automática del archivo mensual desde appindices: primero revisar en DevTools → Network

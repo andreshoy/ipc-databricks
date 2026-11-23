@@ -1,0 +1,995 @@
+{
+  "datasets": [
+    {
+      "name": "ds_kpi_total",
+      "displayName": "kpi_total",
+      "queryLines": [
+        "SELECT fecha,\n",
+        "       ROUND(variacion_mensual, 2)            AS mensual,\n",
+        "       ROUND(variacion_anual, 2)              AS anual,\n",
+        "       ROUND(variacion_anio_corrido, 2)       AS anio_corrido,\n",
+        "       ROUND(cambio_anual_vs_mes_anterior, 2) AS cambio_anual_pp\n",
+        "FROM ipc.gold.resumen_kpi\n",
+        "WHERE nivel_ingresos = 'Total Nivel de Ingresos'"
+      ]
+    },
+    {
+      "name": "ds_kpi_ingresos",
+      "displayName": "kpi_ingresos",
+      "queryLines": [
+        "SELECT date_format(fecha, 'yyyy-MM')          AS mes,\n",
+        "       nivel_ingresos, orden_ingreso,\n",
+        "       ROUND(variacion_mensual, 2)            AS mensual,\n",
+        "       ROUND(variacion_anual, 2)              AS anual,\n",
+        "       ROUND(variacion_anio_corrido, 2)       AS anio_corrido,\n",
+        "       ROUND(cambio_anual_vs_mes_anterior, 2) AS cambio_anual_pp\n",
+        "FROM ipc.gold.resumen_kpi\n",
+        "ORDER BY orden_ingreso"
+      ]
+    },
+    {
+      "name": "ds_top_contribucion",
+      "displayName": "top_contribucion",
+      "queryLines": [
+        "SELECT nivel_ingresos, nombre, division_nombre,\n",
+        "       ROUND(variacion_anual, 2)     AS variacion_anual,\n",
+        "       ROUND(contribucion_anual, 3)  AS contribucion_pp,\n",
+        "       ROUND(participacion_anual, 1) AS participacion_pct\n",
+        "FROM ipc.gold.resumen_ranking\n",
+        "WHERE rank_mayor_contribucion_anual <= 10"
+      ]
+    },
+    {
+      "name": "ds_top_alzas_mes",
+      "displayName": "top_alzas_mes",
+      "queryLines": [
+        "SELECT nivel_ingresos, nombre, division_nombre,\n",
+        "       ROUND(variacion_mensual, 2) AS variacion_mensual\n",
+        "FROM ipc.gold.resumen_ranking\n",
+        "WHERE rank_mayor_alza_mensual <= 10"
+      ]
+    },
+    {
+      "name": "ds_top_bajas_mes",
+      "displayName": "top_bajas_mes",
+      "queryLines": [
+        "SELECT nivel_ingresos, nombre, division_nombre,\n",
+        "       ROUND(variacion_mensual, 2) AS variacion_mensual\n",
+        "FROM ipc.gold.resumen_ranking\n",
+        "WHERE rank_mayor_baja_mensual <= 10"
+      ]
+    },
+    {
+      "name": "ds_brecha_pa_ultimo",
+      "displayName": "brecha_pa_ultimo",
+      "queryLines": [
+        "SELECT ROUND(brecha_anual, 2)                   AS brecha_pp,\n",
+        "       ROUND(cambio_brecha_vs_mes_anterior, 2)  AS vs_mes_anterior,\n",
+        "       ROUND(cambio_brecha_vs_anio_anterior, 2) AS vs_anio_anterior\n",
+        "FROM ipc.gold.resumen_brechas\n",
+        "WHERE tipo = 'pobres_vs_altos' AND nivel_canasta = 'Total'"
+      ]
+    },
+    {
+      "name": "ds_serie_ingresos",
+      "displayName": "serie_ingresos",
+      "queryLines": [
+        "SELECT fecha, nivel_ingresos, orden_ingreso,\n",
+        "       ROUND(variacion_anual, 2) AS anual\n",
+        "FROM ipc.gold.ipc_consulta\n",
+        "WHERE ciudad = 'NACIONAL' AND nivel_canasta = 'Total' AND variacion_anual IS NOT NULL"
+      ]
+    },
+    {
+      "name": "ds_serie_brecha_pa",
+      "displayName": "serie_brecha_pa",
+      "queryLines": [
+        "SELECT fecha, ROUND(brecha_anual, 2) AS brecha_pp\n",
+        "FROM ipc.gold.brechas\n",
+        "WHERE tipo = 'pobres_vs_altos' AND nivel_canasta = 'Total' AND brecha_anual IS NOT NULL"
+      ]
+    },
+    {
+      "name": "ds_brechas_ciudad",
+      "displayName": "brechas_ciudad",
+      "queryLines": [
+        "SELECT grupo AS ciudad,\n",
+        "       ROUND(variacion_anual_grupo, 2) AS inflacion_anual,\n",
+        "       ROUND(brecha_anual, 2)          AS brecha_pp\n",
+        "FROM ipc.gold.resumen_brechas\n",
+        "WHERE tipo = 'ciudad' AND nivel_canasta = 'Total'"
+      ]
+    },
+    {
+      "name": "ds_brecha_pa_division",
+      "displayName": "brecha_pa_division",
+      "queryLines": [
+        "SELECT nombre AS division, ROUND(brecha_anual, 2) AS brecha_pp\n",
+        "FROM ipc.gold.resumen_brechas\n",
+        "WHERE tipo = 'pobres_vs_altos' AND nivel_canasta = 'Division'"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "resumen",
+      "displayName": "Resumen",
+      "layout": [
+        {
+          "widget": {
+            "name": "titulo_resumen",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## IPC Colombia · último mes publicado\n",
+                "Total nacional (base dic-2018 = 100). Fuente: DANE. Se actualiza solo cuando el job `ipc_mensual` recalcula gold.\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "c_anual",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpi_total",
+                  "fields": [
+                    {
+                      "name": "anual",
+                      "expression": "`anual`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "anual",
+                  "displayName": "Inflación anual (%)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Inflación anual (%)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_mensual",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpi_total",
+                  "fields": [
+                    {
+                      "name": "mensual",
+                      "expression": "`mensual`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "mensual",
+                  "displayName": "Variación mensual (%)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Variación mensual (%)"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_anio_corrido",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpi_total",
+                  "fields": [
+                    {
+                      "name": "anio_corrido",
+                      "expression": "`anio_corrido`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "anio_corrido",
+                  "displayName": "Año corrido (%)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Año corrido (%)"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "t_ingresos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_kpi_ingresos",
+                  "fields": [
+                    {
+                      "name": "mes",
+                      "expression": "`mes`"
+                    },
+                    {
+                      "name": "nivel_ingresos",
+                      "expression": "`nivel_ingresos`"
+                    },
+                    {
+                      "name": "mensual",
+                      "expression": "`mensual`"
+                    },
+                    {
+                      "name": "anual",
+                      "expression": "`anual`"
+                    },
+                    {
+                      "name": "anio_corrido",
+                      "expression": "`anio_corrido`"
+                    },
+                    {
+                      "name": "cambio_anual_pp",
+                      "expression": "`cambio_anual_pp`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "mes",
+                    "displayName": "mes"
+                  },
+                  {
+                    "fieldName": "nivel_ingresos",
+                    "displayName": "nivel_ingresos"
+                  },
+                  {
+                    "fieldName": "mensual",
+                    "displayName": "mensual"
+                  },
+                  {
+                    "fieldName": "anual",
+                    "displayName": "anual"
+                  },
+                  {
+                    "fieldName": "anio_corrido",
+                    "displayName": "anio_corrido"
+                  },
+                  {
+                    "fieldName": "cambio_anual_pp",
+                    "displayName": "cambio_anual_pp"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Inflación por nivel de ingreso (cambio_anual_pp = vs. mes anterior)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 6,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "f_ingreso",
+            "queries": [
+              {
+                "name": "filtro_ingreso_top_contribucion",
+                "query": {
+                  "datasetName": "ds_top_contribucion",
+                  "fields": [
+                    {
+                      "name": "nivel_ingresos",
+                      "expression": "`nivel_ingresos`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "filtro_ingreso_top_alzas_mes",
+                "query": {
+                  "datasetName": "ds_top_alzas_mes",
+                  "fields": [
+                    {
+                      "name": "nivel_ingresos",
+                      "expression": "`nivel_ingresos`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "filtro_ingreso_top_bajas_mes",
+                "query": {
+                  "datasetName": "ds_top_bajas_mes",
+                  "fields": [
+                    {
+                      "name": "nivel_ingresos",
+                      "expression": "`nivel_ingresos`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "nivel_ingresos",
+                    "displayName": "nivel_ingresos",
+                    "queryName": "filtro_ingreso_top_contribucion"
+                  },
+                  {
+                    "fieldName": "nivel_ingresos",
+                    "displayName": "nivel_ingresos",
+                    "queryName": "filtro_ingreso_top_alzas_mes"
+                  },
+                  {
+                    "fieldName": "nivel_ingresos",
+                    "displayName": "nivel_ingresos",
+                    "queryName": "filtro_ingreso_top_bajas_mes"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Nivel de ingreso (rankings)"
+              },
+              "selection": {
+                "defaultSelection": {
+                  "values": {
+                    "dataType": "STRING",
+                    "values": [
+                      {
+                        "value": "Total Nivel de Ingresos"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "b_contribucion",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_top_contribucion",
+                  "fields": [
+                    {
+                      "name": "nombre",
+                      "expression": "`nombre`"
+                    },
+                    {
+                      "name": "contribucion_pp",
+                      "expression": "`contribucion_pp`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "contribucion_pp",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "contribucion_pp"
+                },
+                "y": {
+                  "fieldName": "nombre",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reverse"
+                    }
+                  },
+                  "displayName": "nombre"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Top 10 subclases · contribución a la inflación anual (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "b_alzas",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_top_alzas_mes",
+                  "fields": [
+                    {
+                      "name": "nombre",
+                      "expression": "`nombre`"
+                    },
+                    {
+                      "name": "variacion_mensual",
+                      "expression": "`variacion_mensual`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "variacion_mensual",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "variacion_mensual"
+                },
+                "y": {
+                  "fieldName": "nombre",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reverse"
+                    }
+                  },
+                  "displayName": "nombre"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Mayores alzas del mes (%)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 3,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "b_bajas",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_top_bajas_mes",
+                  "fields": [
+                    {
+                      "name": "nombre",
+                      "expression": "`nombre`"
+                    },
+                    {
+                      "name": "variacion_mensual",
+                      "expression": "`variacion_mensual`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "variacion_mensual",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "variacion_mensual"
+                },
+                "y": {
+                  "fieldName": "nombre",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reverse"
+                    }
+                  },
+                  "displayName": "nombre"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Mayores bajas del mes (%)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 20,
+            "width": 3,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "brechas",
+      "displayName": "Brechas",
+      "layout": [
+        {
+          "widget": {
+            "name": "titulo_brechas",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Brechas de inflación\n",
+                "Diferencia en puntos porcentuales (p.p.) entre la inflación anual de un grupo y su referencia.\n"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "c_brecha",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_brecha_pa_ultimo",
+                  "fields": [
+                    {
+                      "name": "brecha_pp",
+                      "expression": "`brecha_pp`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "brecha_pp",
+                  "displayName": "Brecha Pobres − Ingresos Altos (p.p.)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Brecha Pobres − Ingresos Altos (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_brecha_mes",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_brecha_pa_ultimo",
+                  "fields": [
+                    {
+                      "name": "vs_mes_anterior",
+                      "expression": "`vs_mes_anterior`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "vs_mes_anterior",
+                  "displayName": "Cambio vs. mes anterior (p.p.)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Cambio vs. mes anterior (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_brecha_anio",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_brecha_pa_ultimo",
+                  "fields": [
+                    {
+                      "name": "vs_anio_anterior",
+                      "expression": "`vs_anio_anterior`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "vs_anio_anterior",
+                  "displayName": "Cambio vs. hace un año (p.p.)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Cambio vs. hace un año (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "l_ingresos",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_serie_ingresos",
+                  "fields": [
+                    {
+                      "name": "fecha",
+                      "expression": "`fecha`"
+                    },
+                    {
+                      "name": "anual",
+                      "expression": "`anual`"
+                    },
+                    {
+                      "name": "nivel_ingresos",
+                      "expression": "`nivel_ingresos`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "fecha",
+                  "scale": {
+                    "type": "temporal"
+                  },
+                  "displayName": "fecha"
+                },
+                "y": {
+                  "fieldName": "anual",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "anual"
+                },
+                "color": {
+                  "fieldName": "nivel_ingresos",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "nivel_ingresos"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Inflación anual por nivel de ingreso (%)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "l_brecha",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_serie_brecha_pa",
+                  "fields": [
+                    {
+                      "name": "fecha",
+                      "expression": "`fecha`"
+                    },
+                    {
+                      "name": "brecha_pp",
+                      "expression": "`brecha_pp`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "fecha",
+                  "scale": {
+                    "type": "temporal"
+                  },
+                  "displayName": "fecha"
+                },
+                "y": {
+                  "fieldName": "brecha_pp",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "brecha_pp"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Evolución de la brecha Pobres − Ingresos Altos (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "b_ciudades",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_brechas_ciudad",
+                  "fields": [
+                    {
+                      "name": "ciudad",
+                      "expression": "`ciudad`"
+                    },
+                    {
+                      "name": "brecha_pp",
+                      "expression": "`brecha_pp`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "brecha_pp",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "brecha_pp"
+                },
+                "y": {
+                  "fieldName": "ciudad",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reverse"
+                    }
+                  },
+                  "displayName": "ciudad"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Ciudad vs. nacional · último mes (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 18,
+            "width": 3,
+            "height": 10
+          }
+        },
+        {
+          "widget": {
+            "name": "b_divisiones",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_brecha_pa_division",
+                  "fields": [
+                    {
+                      "name": "division",
+                      "expression": "`division`"
+                    },
+                    {
+                      "name": "brecha_pp",
+                      "expression": "`brecha_pp`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "brecha_pp",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "brecha_pp"
+                },
+                "y": {
+                  "fieldName": "division",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reverse"
+                    }
+                  },
+                  "displayName": "division"
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Pobres − Altos por división · último mes (p.p.)"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 18,
+            "width": 3,
+            "height": 10
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ]
+}
