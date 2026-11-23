@@ -4,17 +4,18 @@
 Repo, entorno local, cuenta Free Edition, catálogo, volumen y primer archivo explorado.
 
 ## Etapa 2 · Pipeline de datos
-- `notebooks/10_bronze_ingesta`: lee todos los xlsx del volumen y los guarda en `ipc.bronze.ipc_crudo`
-  con columnas de auditoría (archivo origen, fecha de carga). Procesa solo archivos nuevos.
-- `notebooks/20_silver_ipc`: limpia y tipa (fecha = primer día del mes), estandariza nombres de
-  ciudad/ingreso/rubro, separa jerarquía (división → grupo → clase → subclase) y hace `MERGE`
-  (sin duplicados) en `ipc.silver.ipc`. Clave: fecha + ciudad + ingreso + nivel + código.
-- `notebooks/30_gold_*`: tablas para tableros:
-  - `ipc_consulta`: serie lista para filtrar por división, ingreso, ciudad, mes y año.
-  - `resumen_mes`: último mes, ranking de mayores/menores variaciones (mensual y anual),
-    contribuciones, y **brechas** (p. ej. inflación pobres vs. altos, ciudad vs. nacional) y su
-    cambio frente al mes anterior y al mismo mes del año anterior.
-- Calidad de datos: chequeos simples (meses faltantes, índices nulos, duplicados).
+- ✅ `notebooks/10_bronze_ingesta`: carga los xlsx del volumen en `ipc.bronze.ipc_indices` con
+  columnas de auditoría. Incremental (control en `ipc.bronze.archivos_cargados`).
+- ✅ `notebooks/20_silver_ipc`: consolida en `ipc.silver.ipc_indices` (gana la carga más reciente),
+  marca el `dominio` (geografico | ingresos | consulta), agrega dic-2018 = 100, carga los
+  ponderadores y corre las validaciones.
+- `notebooks/30_gold` (en SQL): tablas para los tableros:
+  - `ipc_consulta`: serie con variación mensual, anual y año corrido, lista para filtrar.
+  - `contribuciones`: aporte (p.p.) de cada división y subclase a la inflación nacional por
+    nivel de ingreso.
+  - `brechas`: nivel de ingreso vs. total, pobres vs. altos y ciudad vs. nacional, con su cambio
+    frente al mes anterior y al mismo mes del año anterior.
+  - Vistas del último mes: `resumen_kpi`, `resumen_ranking`, `resumen_brechas`.
 
 ## Etapa 3 · Orquestación
 - Job `ipc_mensual` creado a mano en **Jobs & Pipelines** con tareas
