@@ -18,12 +18,15 @@ Repo, entorno local, cuenta Free Edition, catálogo, volumen y primer archivo ex
   - Vistas del último mes: `resumen_kpi`, `resumen_ranking`, `resumen_brechas`.
 
 ## Etapa 3 · Orquestación
-- Job `ipc_mensual` creado a mano en **Jobs & Pipelines** con tareas
-  bronze → silver → gold → refresco de dashboard.
-- Disparador **file arrival** sobre `/Volumes/ipc/bronze/raw/mensual/`: al subir el archivo del mes
-  se ejecuta todo. (Si el disparador no estuviera disponible en Free Edition, usar horario mensual,
-  p. ej. día 10 de cada mes, ya que el DANE publica el IPC los primeros días del mes.)
-- Notificación por correo al terminar o fallar.
+- ✅ Job `ipc_mensual` creado a mano en **Jobs & Pipelines** con tareas bronze → silver → gold
+  (serverless, parámetro `catalogo` = `ipc` en cada tarea). Primera corrida manual: 2 min.
+  La tarea de refresco del dashboard se agrega en la etapa 4.
+- ✅ Disparador **file arrival** sobre `/Volumes/ipc/bronze/raw/mensual/` (sí está disponible en
+  Free Edition): al subir el archivo del mes se ejecuta todo. Pendiente: confirmarlo con el archivo
+  de nov-2026 (diciembre). Plan B: horario mensual, día 10.
+- ✅ Notificación por correo al terminar o fallar.
+- Nota: el job usa los notebooks de la Git folder del workspace → hacer **Pull** tras cada cambio
+  en GitHub (o configurar la sección *Git* del job para leer directamente de `main`).
 
 ## Etapa 4 · Tableros (AI/BI Dashboards)
 - **Consulta**: filtros de división de gasto, nivel de ingreso, ciudad, año y mes; línea de índice
@@ -33,6 +36,9 @@ Repo, entorno local, cuenta Free Edition, catálogo, volumen y primer archivo ex
 - Construidos a mano en la interfaz; luego se pueden exportar al repo (`*.lvdash.json`).
 
 ## Etapa 5 · Mejoras opcionales
+- Descarga automática del archivo mensual desde appindices: primero revisar en DevTools → Network
+  si el reporte usa la llamada `querydata` de Power BI (replicable con `requests`); si no, Selenium.
+  Corre fuera de Databricks (Mac con launchd o GitHub Actions) y sube el xlsx al volumen.
 - Databricks App (Streamlit) para una consulta más personalizada.
 - Genie (preguntas en lenguaje natural sobre las tablas gold).
 - CI con GitHub Actions: `pytest` en cada push a `main`.
